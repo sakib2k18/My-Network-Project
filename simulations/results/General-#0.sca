@@ -1,0 +1,60 @@
+version 3
+run General-0-20251030-03:00:00-26776
+attr configname General
+attr datetime 20251030-03:00:00
+attr datetimef 20251030-030000
+attr experiment General
+attr inifile omnetpp.ini
+attr iterationvars ""
+attr iterationvarsd ""
+attr iterationvarsf ""
+attr measurement ""
+attr network MyProject.simulations.EmailNetwork
+attr processid 26776
+attr repetition 0
+attr replication #0
+attr resultdir results
+attr runnumber 0
+attr seedset 0
+config network MyProject.simulations.EmailNetwork
+config sim-time-limit 15s
+config *.cloud.delayMean 0.05s
+config *.cloud.delayJitter 0.02s
+config *.cloud.dropProbability 0.0
+config *.spam.spamKeywords "\"free,prize\""
+config record-eventlog true
+config **.scalar-recording true
+config **.vector-recording true
+
+par EmailNetwork.uaSender typename "\"MyProject.modules.UserAgent\""
+par EmailNetwork.uaSender userName "\"alice\""
+par EmailNetwork.uaSender peerSmtp "\"mta\""
+par EmailNetwork.uaSender peerPop3 "\"mda\""
+par EmailNetwork.uaSender isSender true
+par EmailNetwork.uaSender peerUser "\"bob\""
+par EmailNetwork.uaSender sendInterval 10s
+attr unit s
+par EmailNetwork.uaSender checkInterval 20s
+attr unit s
+par EmailNetwork.uaReceiver typename "\"MyProject.modules.UserAgent\""
+par EmailNetwork.uaReceiver userName "\"bob\""
+par EmailNetwork.uaReceiver peerSmtp "\"mta\""
+par EmailNetwork.uaReceiver peerPop3 "\"mda\""
+par EmailNetwork.uaReceiver isSender false
+par EmailNetwork.uaReceiver peerUser "\"\""
+par EmailNetwork.uaReceiver sendInterval 10s
+attr unit s
+par EmailNetwork.uaReceiver checkInterval 20s
+attr unit s
+par EmailNetwork.cloud typename "\"MyProject.modules.NetworkCloud\""
+par EmailNetwork.cloud delayMean 0.05s
+attr unit s
+par EmailNetwork.cloud delayJitter 0.02s
+attr unit s
+par EmailNetwork.cloud dropProbability 0
+par EmailNetwork.mta typename "\"MyProject.modules.MailTransferAgent\""
+par EmailNetwork.spam typename "\"MyProject.modules.SpamFilter\""
+par EmailNetwork.spam spamKeywords "\"free,prize\""
+par EmailNetwork.mda typename "\"MyProject.modules.MailDeliveryAgent\""
+par EmailNetwork typename "\"MyProject.simulations.EmailNetwork\""
+

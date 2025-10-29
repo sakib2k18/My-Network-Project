@@ -1,0 +1,296 @@
+SB ov 1538 ev 2 rid General-0-20251030-03:00:00-26776
+
+E # 0 t 0 m 1 ce -1 msg -1
+MC id 1 c omnetpp::cModule t MyProject.simulations.EmailNetwork n EmailNetwork cm 1
+MDC id 1 d bgb=1600,600
+MC id 2 c UserAgent t MyProject.modules.UserAgent pid 1 n uaSender
+GC m 2 g 0 n networkIn o 0
+GC m 2 g 3 n networkOut o 1
+MDC id 2 d b=120,70;p=200,200;i=block/app;is=s
+MC id 3 c UserAgent t MyProject.modules.UserAgent pid 1 n uaReceiver
+GC m 3 g 0 n networkIn o 0
+GC m 3 g 3 n networkOut o 1
+MDC id 3 d b=120,70;p=200,400;i=block/app;is=s
+MC id 4 c NetworkCloud t MyProject.modules.NetworkCloud pid 1 n cloud
+MDC id 4 d b=180,120;p=500,300;i=cloud
+GC m 4 g 1048576 n in i 0 o 0
+GC m 4 g 1048577 n in i 1 o 0
+GC m 4 g 1048578 n in i 2 o 0
+GC m 4 g 1048579 n in i 3 o 0
+GC m 4 g 1048580 n in i 4 o 0
+GC m 4 g 2621440 n out i 0 o 1
+GC m 4 g 2621441 n out i 1 o 1
+GC m 4 g 2621442 n out i 2 o 1
+GC m 4 g 2621443 n out i 3 o 1
+GC m 4 g 2621444 n out i 4 o 1
+MC id 5 c MailTransferAgent t MyProject.modules.MailTransferAgent pid 1 n mta
+MDC id 5 d b=140,80;p=800,150;i=block/server;is=s
+MC id 6 c SpamFilter t MyProject.modules.SpamFilter pid 1 n spam
+MDC id 6 d b=140,80;p=800,300;i=block/filter;is=s
+MC id 7 c MailDeliveryAgent t MyProject.modules.MailDeliveryAgent pid 1 n mda
+MDC id 7 d b=140,80;p=800,450;i=block/server2;is=s
+CC sm 2 sg 3 dm 4 dg 1048576
+CC sm 4 sg 2621440 dm 2 dg 0
+CC sm 3 sg 3 dm 4 dg 1048577
+CC sm 4 sg 2621441 dm 3 dg 0
+GC m 5 g 2621440 n networkOut i 0 o 1
+CC sm 5 sg 2621440 dm 4 dg 1048578
+GC m 5 g 1048576 n networkIn i 0 o 0
+CC sm 4 sg 2621442 dm 5 dg 1048576
+GC m 6 g 2621440 n networkOut i 0 o 1
+CC sm 6 sg 2621440 dm 4 dg 1048579
+GC m 6 g 1048576 n networkIn i 0 o 0
+CC sm 4 sg 2621443 dm 6 dg 1048576
+GC m 7 g 2621440 n networkOut i 0 o 1
+CC sm 7 sg 2621440 dm 4 dg 1048580
+GC m 7 g 1048576 n networkIn i 0 o 0
+CC sm 4 sg 2621444 dm 7 dg 1048576
+GC m 5 g 2621441 n networkOut i 1 o 1
+GC m 6 g 1048577 n networkIn i 1 o 0
+CC sm 5 sg 2621441 dm 6 dg 1048577
+GC m 6 g 2621441 n networkOut i 1 o 1
+GC m 7 g 1048577 n networkIn i 1 o 0
+CC sm 6 sg 2621441 dm 7 dg 1048577
+CMB sm 1 tm 2 m initialize(0)
+CM id 0 tid 0 eid 0 etid 0 c omnetpp::cMessage n SMTP:HELO pe -1
+BS id 0 tid 0 eid 0 etid 0 c MyProject::SmtpMessage n SMTP:HELO m 2 pe 0
+SH sm 2 sg 3
+ES id 0 tid 0 eid 0 etid 0 c MyProject::SmtpMessage n SMTP:HELO sm 2 sg 3 st 0 am 4 ag 1048576 at 0 pe 0
+CL id 1 tid 0 eid 1 etid 0 c omnetpp::cMessage n SMTP:HELO m 2 pe -1 cid 0
+CM id 1 tid 1 eid 1 etid 1 c omnetpp::cMessage n SMTP:MAIL pe -1
+BS id 1 tid 1 eid 1 etid 1 c MyProject::SmtpMessage n SMTP:MAIL m 2 pe 0
+SH sm 2 sg 3
+ES id 1 tid 1 eid 1 etid 1 c MyProject::SmtpMessage n SMTP:MAIL sm 2 sg 3 st 0 am 4 ag 1048576 at 0 pe 0
+CL id 2 tid 1 eid 2 etid 1 c omnetpp::cMessage n SMTP:MAIL m 2 pe -1 cid 1
+CM id 2 tid 2 eid 2 etid 2 c omnetpp::cMessage n SMTP:RCPT pe -1
+BS id 2 tid 2 eid 2 etid 2 c MyProject::SmtpMessage n SMTP:RCPT m 2 pe 0
+SH sm 2 sg 3
+ES id 2 tid 2 eid 2 etid 2 c MyProject::SmtpMessage n SMTP:RCPT sm 2 sg 3 st 0 am 4 ag 1048576 at 0 pe 0
+CL id 3 tid 2 eid 3 etid 2 c omnetpp::cMessage n SMTP:RCPT m 2 pe -1 cid 2
+CM id 3 tid 3 eid 3 etid 3 c omnetpp::cMessage n SMTP:DATA pe -1
+BS id 3 tid 3 eid 3 etid 3 c MyProject::SmtpMessage n SMTP:DATA m 2 pe 0
+SH sm 2 sg 3
+ES id 3 tid 3 eid 3 etid 3 c MyProject::SmtpMessage n SMTP:DATA sm 2 sg 3 st 0 am 4 ag 1048576 at 0 pe 0
+CL id 4 tid 3 eid 4 etid 3 c omnetpp::cMessage n SMTP:DATA m 2 pe -1 cid 3
+CM id 4 tid 4 eid 4 etid 4 c omnetpp::cMessage n EMAIL pe -1
+BS id 4 tid 4 eid 4 etid 4 c MyProject::EmailMessage n EMAIL m 2 pe 0
+SH sm 2 sg 3
+ES id 4 tid 4 eid 4 etid 4 c MyProject::EmailMessage n EMAIL sm 2 sg 3 st 0 am 4 ag 1048576 at 0 pe 0
+CL id 5 tid 4 eid 5 etid 4 c omnetpp::cMessage n EMAIL m 2 pe -1 cid 4
+CM id 5 tid 5 eid 5 etid 5 c omnetpp::cMessage n SMTP:QUIT pe -1
+BS id 5 tid 5 eid 5 etid 5 c MyProject::SmtpMessage n SMTP:QUIT m 2 pe 0
+SH sm 2 sg 3
+ES id 5 tid 5 eid 5 etid 5 c MyProject::SmtpMessage n SMTP:QUIT sm 2 sg 3 st 0 am 4 ag 1048576 at 0 pe 0
+CL id 6 tid 5 eid 6 etid 5 c omnetpp::cMessage n SMTP:QUIT m 2 pe -1 cid 5
+CM id 6 tid 6 eid 6 etid 6 c omnetpp::cMessage n doneTimer pe -1
+BS id 6 tid 6 eid 6 etid 6 c omnetpp::cMessage n doneTimer sm 2 st 0 am 2 at 0.2 pe 0
+ES id 6 tid 6 eid 6 etid 6 c omnetpp::cMessage n doneTimer sm 2 st 0 am 2 at 0.2 pe 0
+MDC id 2 d "t=Sent:1\nRecv:0;b=120,70;p=200,200;i=block/app;is=s"
+CME
+CMB sm 1 tm 3 m initialize(0)
+CM id 7 tid 7 eid 7 etid 7 c omnetpp::cMessage n POP3:USER pe -1
+BS id 7 tid 7 eid 7 etid 7 c MyProject::Pop3Message n POP3:USER m 3 pe 0
+SH sm 3 sg 3
+ES id 7 tid 7 eid 7 etid 7 c MyProject::Pop3Message n POP3:USER sm 3 sg 3 st 0 am 4 ag 1048577 at 0 pe 0
+CL id 8 tid 7 eid 8 etid 7 c omnetpp::cMessage n POP3:USER m 3 pe -1 cid 7
+CM id 8 tid 8 eid 8 etid 8 c omnetpp::cMessage n POP3:PASS pe -1
+BS id 8 tid 8 eid 8 etid 8 c MyProject::Pop3Message n POP3:PASS m 3 pe 0
+SH sm 3 sg 3
+ES id 8 tid 8 eid 8 etid 8 c MyProject::Pop3Message n POP3:PASS sm 3 sg 3 st 0 am 4 ag 1048577 at 0 pe 0
+CL id 9 tid 8 eid 9 etid 8 c omnetpp::cMessage n POP3:PASS m 3 pe -1 cid 8
+CM id 9 tid 9 eid 9 etid 9 c omnetpp::cMessage n POP3:LIST pe -1
+BS id 9 tid 9 eid 9 etid 9 c MyProject::Pop3Message n POP3:LIST m 3 pe 0
+SH sm 3 sg 3
+ES id 9 tid 9 eid 9 etid 9 c MyProject::Pop3Message n POP3:LIST sm 3 sg 3 st 0 am 4 ag 1048577 at 0 pe 0
+CL id 10 tid 9 eid 10 etid 9 c omnetpp::cMessage n POP3:LIST m 3 pe -1 cid 9
+CM id 10 tid 10 eid 10 etid 10 c omnetpp::cMessage n POP3:RETR pe -1
+BS id 10 tid 10 eid 10 etid 10 c MyProject::Pop3Message n POP3:RETR m 3 pe 0
+SH sm 3 sg 3
+ES id 10 tid 10 eid 10 etid 10 c MyProject::Pop3Message n POP3:RETR sm 3 sg 3 st 0 am 4 ag 1048577 at 0 pe 0
+CL id 11 tid 10 eid 11 etid 10 c omnetpp::cMessage n POP3:RETR m 3 pe -1 cid 10
+CM id 11 tid 11 eid 11 etid 11 c omnetpp::cMessage n doneTimer pe -1
+BS id 11 tid 11 eid 11 etid 11 c omnetpp::cMessage n doneTimer sm 3 st 0 am 3 at 0.2 pe 0
+ES id 11 tid 11 eid 11 etid 11 c omnetpp::cMessage n doneTimer sm 3 st 0 am 3 at 0.2 pe 0
+MDC id 3 d "t=Sent:0\nRecv:0;b=120,70;p=200,400;i=block/app;is=s"
+CME
+CMB sm 1 tm 4 m initialize(0)
+CME
+CMB sm 1 tm 5 m initialize(0)
+MDC id 5 d t=Relayed:0;b=140,80;p=800,150;i=block/server;is=s
+CME
+CMB sm 1 tm 6 m initialize(0)
+MDC id 6 d t=Spam:0;b=140,80;p=800,300;i=block/filter;is=s
+CME
+CMB sm 1 tm 7 m initialize(0)
+MDC id 7 d t=Mailboxes:0;b=140,80;p=800,450;i=block/server2;is=s
+CME
+
+E # 1 t 0 m 4 ce 0 msg 0
+CL id 12 tid 0 eid 12 etid 0 c omnetpp::cMessage n SMTP:HELO m 4 pe -1 cid 0
+BS id 12 tid 0 eid 12 etid 0 c MyProject::SmtpMessage n SMTP:HELO m 4 pe 1 sd 0.053713784656
+SH sm 4 sg 2621441
+ES id 12 tid 0 eid 12 etid 0 c MyProject::SmtpMessage n SMTP:HELO sm 4 sg 2621441 st 0.053713784656 am 3 ag 0 at 0.053713784656 pe 1
+CL id 13 tid 0 eid 13 etid 0 c omnetpp::cMessage n SMTP:HELO m 4 pe -1 cid 12
+CL id 13 tid 0 eid 13 etid 0 c omnetpp::cMessage n SMTP:HELO m 4 pe -1 cid 0
+BS id 13 tid 0 eid 13 etid 0 c MyProject::SmtpMessage n SMTP:HELO m 4 pe 1 sd 0.053713784656
+SH sm 4 sg 2621442
+ES id 13 tid 0 eid 13 etid 0 c MyProject::SmtpMessage n SMTP:HELO sm 4 sg 2621442 st 0.053713784656 am 5 ag 1048576 at 0.053713784656 pe 1
+CL id 14 tid 0 eid 14 etid 0 c omnetpp::cMessage n SMTP:HELO m 4 pe -1 cid 13
+CL id 14 tid 0 eid 14 etid 0 c omnetpp::cMessage n SMTP:HELO m 4 pe -1 cid 0
+BS id 14 tid 0 eid 14 etid 0 c MyProject::SmtpMessage n SMTP:HELO m 4 pe 1 sd 0.053713784656
+SH sm 4 sg 2621443
+ES id 14 tid 0 eid 14 etid 0 c MyProject::SmtpMessage n SMTP:HELO sm 4 sg 2621443 st 0.053713784656 am 6 ag 1048576 at 0.053713784656 pe 1
+CL id 15 tid 0 eid 15 etid 0 c omnetpp::cMessage n SMTP:HELO m 4 pe -1 cid 14
+BS id 0 tid 0 eid 0 etid 0 c MyProject::SmtpMessage n SMTP:HELO m 4 pe 1 sd 0.053713784656
+SH sm 4 sg 2621444
+ES id 0 tid 0 eid 0 etid 0 c MyProject::SmtpMessage n SMTP:HELO sm 4 sg 2621444 st 0.053713784656 am 7 ag 1048576 at 0.053713784656 pe 1
+CL id 15 tid 0 eid 15 etid 0 c omnetpp::cMessage n SMTP:HELO m 4 pe -1 cid 0
+
+E # 2 t 0 m 4 ce 0 msg 1
+CL id 15 tid 1 eid 15 etid 1 c omnetpp::cMessage n SMTP:MAIL m 4 pe -1 cid 1
+BS id 15 tid 1 eid 15 etid 1 c MyProject::SmtpMessage n SMTP:MAIL m 4 pe 2 sd 0.063770629764
+SH sm 4 sg 2621441
+ES id 15 tid 1 eid 15 etid 1 c MyProject::SmtpMessage n SMTP:MAIL sm 4 sg 2621441 st 0.063770629764 am 3 ag 0 at 0.063770629764 pe 2
+CL id 16 tid 1 eid 16 etid 1 c omnetpp::cMessage n SMTP:MAIL m 4 pe -1 cid 15
+CL id 16 tid 1 eid 16 etid 1 c omnetpp::cMessage n SMTP:MAIL m 4 pe -1 cid 1
+BS id 16 tid 1 eid 16 etid 1 c MyProject::SmtpMessage n SMTP:MAIL m 4 pe 2 sd 0.063770629764
+SH sm 4 sg 2621442
+ES id 16 tid 1 eid 16 etid 1 c MyProject::SmtpMessage n SMTP:MAIL sm 4 sg 2621442 st 0.063770629764 am 5 ag 1048576 at 0.063770629764 pe 2
+CL id 17 tid 1 eid 17 etid 1 c omnetpp::cMessage n SMTP:MAIL m 4 pe -1 cid 16
+CL id 17 tid 1 eid 17 etid 1 c omnetpp::cMessage n SMTP:MAIL m 4 pe -1 cid 1
+BS id 17 tid 1 eid 17 etid 1 c MyProject::SmtpMessage n SMTP:MAIL m 4 pe 2 sd 0.063770629764
+SH sm 4 sg 2621443
+ES id 17 tid 1 eid 17 etid 1 c MyProject::SmtpMessage n SMTP:MAIL sm 4 sg 2621443 st 0.063770629764 am 6 ag 1048576 at 0.063770629764 pe 2
+CL id 18 tid 1 eid 18 etid 1 c omnetpp::cMessage n SMTP:MAIL m 4 pe -1 cid 17
+BS id 1 tid 1 eid 1 etid 1 c MyProject::SmtpMessage n SMTP:MAIL m 4 pe 2 sd 0.063770629764
+SH sm 4 sg 2621444
+ES id 1 tid 1 eid 1 etid 1 c MyProject::SmtpMessage n SMTP:MAIL sm 4 sg 2621444 st 0.063770629764 am 7 ag 1048576 at 0.063770629764 pe 2
+CL id 18 tid 1 eid 18 etid 1 c omnetpp::cMessage n SMTP:MAIL m 4 pe -1 cid 1
+
+E # 3 t 0 m 4 ce 0 msg 2
+CL id 18 tid 2 eid 18 etid 2 c omnetpp::cMessage n SMTP:RCPT m 4 pe -1 cid 2
+BS id 18 tid 2 eid 18 etid 2 c MyProject::SmtpMessage n SMTP:RCPT m 4 pe 3 sd 0.064317824794
+SH sm 4 sg 2621441
+ES id 18 tid 2 eid 18 etid 2 c MyProject::SmtpMessage n SMTP:RCPT sm 4 sg 2621441 st 0.064317824794 am 3 ag 0 at 0.064317824794 pe 3
+CL id 19 tid 2 eid 19 etid 2 c omnetpp::cMessage n SMTP:RCPT m 4 pe -1 cid 18
+CL id 19 tid 2 eid 19 etid 2 c omnetpp::cMessage n SMTP:RCPT m 4 pe -1 cid 2
+BS id 19 tid 2 eid 19 etid 2 c MyProject::SmtpMessage n SMTP:RCPT m 4 pe 3 sd 0.064317824794
+SH sm 4 sg 2621442
+ES id 19 tid 2 eid 19 etid 2 c MyProject::SmtpMessage n SMTP:RCPT sm 4 sg 2621442 st 0.064317824794 am 5 ag 1048576 at 0.064317824794 pe 3
+CL id 20 tid 2 eid 20 etid 2 c omnetpp::cMessage n SMTP:RCPT m 4 pe -1 cid 19
+CL id 20 tid 2 eid 20 etid 2 c omnetpp::cMessage n SMTP:RCPT m 4 pe -1 cid 2
+BS id 20 tid 2 eid 20 etid 2 c MyProject::SmtpMessage n SMTP:RCPT m 4 pe 3 sd 0.064317824794
+SH sm 4 sg 2621443
+ES id 20 tid 2 eid 20 etid 2 c MyProject::SmtpMessage n SMTP:RCPT sm 4 sg 2621443 st 0.064317824794 am 6 ag 1048576 at 0.064317824794 pe 3
+CL id 21 tid 2 eid 21 etid 2 c omnetpp::cMessage n SMTP:RCPT m 4 pe -1 cid 20
+BS id 2 tid 2 eid 2 etid 2 c MyProject::SmtpMessage n SMTP:RCPT m 4 pe 3 sd 0.064317824794
+SH sm 4 sg 2621444
+ES id 2 tid 2 eid 2 etid 2 c MyProject::SmtpMessage n SMTP:RCPT sm 4 sg 2621444 st 0.064317824794 am 7 ag 1048576 at 0.064317824794 pe 3
+CL id 21 tid 2 eid 21 etid 2 c omnetpp::cMessage n SMTP:RCPT m 4 pe -1 cid 2
+
+E # 4 t 0 m 4 ce 0 msg 3
+CL id 21 tid 3 eid 21 etid 3 c omnetpp::cMessage n SMTP:DATA m 4 pe -1 cid 3
+BS id 21 tid 3 eid 21 etid 3 c MyProject::SmtpMessage n SMTP:DATA m 4 pe 4 sd 0.06389006949
+SH sm 4 sg 2621441
+ES id 21 tid 3 eid 21 etid 3 c MyProject::SmtpMessage n SMTP:DATA sm 4 sg 2621441 st 0.06389006949 am 3 ag 0 at 0.06389006949 pe 4
+CL id 22 tid 3 eid 22 etid 3 c omnetpp::cMessage n SMTP:DATA m 4 pe -1 cid 21
+CL id 22 tid 3 eid 22 etid 3 c omnetpp::cMessage n SMTP:DATA m 4 pe -1 cid 3
+BS id 22 tid 3 eid 22 etid 3 c MyProject::SmtpMessage n SMTP:DATA m 4 pe 4 sd 0.06389006949
+SH sm 4 sg 2621442
+ES id 22 tid 3 eid 22 etid 3 c MyProject::SmtpMessage n SMTP:DATA sm 4 sg 2621442 st 0.06389006949 am 5 ag 1048576 at 0.06389006949 pe 4
+CL id 23 tid 3 eid 23 etid 3 c omnetpp::cMessage n SMTP:DATA m 4 pe -1 cid 22
+CL id 23 tid 3 eid 23 etid 3 c omnetpp::cMessage n SMTP:DATA m 4 pe -1 cid 3
+BS id 23 tid 3 eid 23 etid 3 c MyProject::SmtpMessage n SMTP:DATA m 4 pe 4 sd 0.06389006949
+SH sm 4 sg 2621443
+ES id 23 tid 3 eid 23 etid 3 c MyProject::SmtpMessage n SMTP:DATA sm 4 sg 2621443 st 0.06389006949 am 6 ag 1048576 at 0.06389006949 pe 4
+CL id 24 tid 3 eid 24 etid 3 c omnetpp::cMessage n SMTP:DATA m 4 pe -1 cid 23
+BS id 3 tid 3 eid 3 etid 3 c MyProject::SmtpMessage n SMTP:DATA m 4 pe 4 sd 0.06389006949
+SH sm 4 sg 2621444
+ES id 3 tid 3 eid 3 etid 3 c MyProject::SmtpMessage n SMTP:DATA sm 4 sg 2621444 st 0.06389006949 am 7 ag 1048576 at 0.06389006949 pe 4
+CL id 24 tid 3 eid 24 etid 3 c omnetpp::cMessage n SMTP:DATA m 4 pe -1 cid 3
+
+E # 5 t 0 m 4 ce 0 msg 4
+CL id 24 tid 4 eid 24 etid 4 c omnetpp::cMessage n EMAIL m 4 pe -1 cid 4
+BS id 24 tid 4 eid 24 etid 4 c MyProject::EmailMessage n EMAIL m 4 pe 5 sd 0.054942547856
+SH sm 4 sg 2621441
+ES id 24 tid 4 eid 24 etid 4 c MyProject::EmailMessage n EMAIL sm 4 sg 2621441 st 0.054942547856 am 3 ag 0 at 0.054942547856 pe 5
+CL id 25 tid 4 eid 25 etid 4 c omnetpp::cMessage n EMAIL m 4 pe -1 cid 24
+CL id 25 tid 4 eid 25 etid 4 c omnetpp::cMessage n EMAIL m 4 pe -1 cid 4
+BS id 25 tid 4 eid 25 etid 4 c MyProject::EmailMessage n EMAIL m 4 pe 5 sd 0.054942547856
+SH sm 4 sg 2621442
+ES id 25 tid 4 eid 25 etid 4 c MyProject::EmailMessage n EMAIL sm 4 sg 2621442 st 0.054942547856 am 5 ag 1048576 at 0.054942547856 pe 5
+CL id 26 tid 4 eid 26 etid 4 c omnetpp::cMessage n EMAIL m 4 pe -1 cid 25
+CL id 26 tid 4 eid 26 etid 4 c omnetpp::cMessage n EMAIL m 4 pe -1 cid 4
+BS id 26 tid 4 eid 26 etid 4 c MyProject::EmailMessage n EMAIL m 4 pe 5 sd 0.054942547856
+SH sm 4 sg 2621443
+ES id 26 tid 4 eid 26 etid 4 c MyProject::EmailMessage n EMAIL sm 4 sg 2621443 st 0.054942547856 am 6 ag 1048576 at 0.054942547856 pe 5
+CL id 27 tid 4 eid 27 etid 4 c omnetpp::cMessage n EMAIL m 4 pe -1 cid 26
+BS id 4 tid 4 eid 4 etid 4 c MyProject::EmailMessage n EMAIL m 4 pe 5 sd 0.054942547856
+SH sm 4 sg 2621444
+ES id 4 tid 4 eid 4 etid 4 c MyProject::EmailMessage n EMAIL sm 4 sg 2621444 st 0.054942547856 am 7 ag 1048576 at 0.054942547856 pe 5
+CL id 27 tid 4 eid 27 etid 4 c omnetpp::cMessage n EMAIL m 4 pe -1 cid 4
+
+E # 6 t 0 m 4 ce 0 msg 5
+CL id 27 tid 5 eid 27 etid 5 c omnetpp::cMessage n SMTP:QUIT m 4 pe -1 cid 5
+BS id 27 tid 5 eid 27 etid 5 c MyProject::SmtpMessage n SMTP:QUIT m 4 pe 6 sd 0.045375268329
+SH sm 4 sg 2621441
+ES id 27 tid 5 eid 27 etid 5 c MyProject::SmtpMessage n SMTP:QUIT sm 4 sg 2621441 st 0.045375268329 am 3 ag 0 at 0.045375268329 pe 6
+CL id 28 tid 5 eid 28 etid 5 c omnetpp::cMessage n SMTP:QUIT m 4 pe -1 cid 27
+CL id 28 tid 5 eid 28 etid 5 c omnetpp::cMessage n SMTP:QUIT m 4 pe -1 cid 5
+BS id 28 tid 5 eid 28 etid 5 c MyProject::SmtpMessage n SMTP:QUIT m 4 pe 6 sd 0.045375268329
+SH sm 4 sg 2621442
+ES id 28 tid 5 eid 28 etid 5 c MyProject::SmtpMessage n SMTP:QUIT sm 4 sg 2621442 st 0.045375268329 am 5 ag 1048576 at 0.045375268329 pe 6
+CL id 29 tid 5 eid 29 etid 5 c omnetpp::cMessage n SMTP:QUIT m 4 pe -1 cid 28
+CL id 29 tid 5 eid 29 etid 5 c omnetpp::cMessage n SMTP:QUIT m 4 pe -1 cid 5
+BS id 29 tid 5 eid 29 etid 5 c MyProject::SmtpMessage n SMTP:QUIT m 4 pe 6 sd 0.045375268329
+SH sm 4 sg 2621443
+ES id 29 tid 5 eid 29 etid 5 c MyProject::SmtpMessage n SMTP:QUIT sm 4 sg 2621443 st 0.045375268329 am 6 ag 1048576 at 0.045375268329 pe 6
+CL id 30 tid 5 eid 30 etid 5 c omnetpp::cMessage n SMTP:QUIT m 4 pe -1 cid 29
+BS id 5 tid 5 eid 5 etid 5 c MyProject::SmtpMessage n SMTP:QUIT m 4 pe 6 sd 0.045375268329
+SH sm 4 sg 2621444
+ES id 5 tid 5 eid 5 etid 5 c MyProject::SmtpMessage n SMTP:QUIT sm 4 sg 2621444 st 0.045375268329 am 7 ag 1048576 at 0.045375268329 pe 6
+CL id 30 tid 5 eid 30 etid 5 c omnetpp::cMessage n SMTP:QUIT m 4 pe -1 cid 5
+
+E # 7 t 0 m 4 ce 0 msg 7
+CL id 30 tid 7 eid 30 etid 7 c omnetpp::cMessage n POP3:USER m 4 pe -1 cid 7
+BS id 30 tid 7 eid 30 etid 7 c MyProject::Pop3Message n POP3:USER m 4 pe 7 sd 0.04190138421
+SH sm 4 sg 2621440
+ES id 30 tid 7 eid 30 etid 7 c MyProject::Pop3Message n POP3:USER sm 4 sg 2621440 st 0.04190138421 am 2 ag 0 at 0.04190138421 pe 7
+CL id 31 tid 7 eid 31 etid 7 c omnetpp::cMessage n POP3:USER m 4 pe -1 cid 30
+CL id 31 tid 7 eid 31 etid 7 c omnetpp::cMessage n POP3:USER m 4 pe -1 cid 7
+BS id 31 tid 7 eid 31 etid 7 c MyProject::Pop3Message n POP3:USER m 4 pe 7 sd 0.04190138421
+SH sm 4 sg 2621442
+ES id 31 tid 7 eid 31 etid 7 c MyProject::Pop3Message n POP3:USER sm 4 sg 2621442 st 0.04190138421 am 5 ag 1048576 at 0.04190138421 pe 7
+CL id 32 tid 7 eid 32 etid 7 c omnetpp::cMessage n POP3:USER m 4 pe -1 cid 31
+CL id 32 tid 7 eid 32 etid 7 c omnetpp::cMessage n POP3:USER m 4 pe -1 cid 7
+BS id 32 tid 7 eid 32 etid 7 c MyProject::Pop3Message n POP3:USER m 4 pe 7 sd 0.04190138421
+SH sm 4 sg 2621443
+ES id 32 tid 7 eid 32 etid 7 c MyProject::Pop3Message n POP3:USER sm 4 sg 2621443 st 0.04190138421 am 6 ag 1048576 at 0.04190138421 pe 7
+CL id 33 tid 7 eid 33 etid 7 c omnetpp::cMessage n POP3:USER m 4 pe -1 cid 32
+BS id 7 tid 7 eid 7 etid 7 c MyProject::Pop3Message n POP3:USER m 4 pe 7 sd 0.04190138421
+SH sm 4 sg 2621444
+ES id 7 tid 7 eid 7 etid 7 c MyProject::Pop3Message n POP3:USER sm 4 sg 2621444 st 0.04190138421 am 7 ag 1048576 at 0.04190138421 pe 7
+CL id 33 tid 7 eid 33 etid 7 c omnetpp::cMessage n POP3:USER m 4 pe -1 cid 7
+
+E # 8 t 0 m 4 ce 0 msg 8
+CL id 33 tid 8 eid 33 etid 8 c omnetpp::cMessage n POP3:PASS m 4 pe -1 cid 8
+BS id 33 tid 8 eid 33 etid 8 c MyProject::Pop3Message n POP3:PASS m 4 pe 8 sd 0.032268519029
+SH sm 4 sg 2621440
+ES id 33 tid 8 eid 33 etid 8 c MyProject::Pop3Message n POP3:PASS sm 4 sg 2621440 st 0.032268519029 am 2 ag 0 at 0.032268519029 pe 8
+CL id 34 tid 8 eid 34 etid 8 c omnetpp::cMessage n POP3:PASS m 4 pe -1 cid 33
+CL id 34 tid 8 eid 34 etid 8 c omnetpp::cMessage n POP3:PASS m 4 pe -1 cid 8
+BS id 34 tid 8 eid 34 etid 8 c MyProject::Pop3Message n POP3:PASS m 4 pe 8 sd 0.032268519029
+SH sm 4 sg 2621442
+ES id 34 tid 8 eid 34 etid 8 c MyProject::Pop3Message n POP3:PASS sm 4 sg 2621442 st 0.032268519029 am 5 ag 1048576 at 0.032268519029 pe 8
+CL id 35 tid 8 eid 35 etid 8 c omnetpp::cMessage n POP3:PASS m 4 pe -1 cid 34
+CL id 35 tid 8 eid 35 etid 8 c omnetpp::cMessage n POP3:PASS m 4 pe -1 cid 8
+BS id 35 tid 8 eid 35 etid 8 c MyProject::Pop3Message n POP3:PASS m 4 pe 8 sd 0.032268519029
+SH sm 4 sg 2621443
+ES id 35 tid 8 eid 35 etid 8 c MyProject::Pop3Message n POP3:PASS sm 4 sg 2621443 st 0.032268519029 am 6 ag 1048576 at 0.032268519029 pe 8
+CL id 36 tid 8 eid 36 etid 8 c omnetpp::cMessage n POP3:PASS m 4 pe -1 cid 35
+BS id 8 tid 8 eid 8 etid 8 c MyProject::Pop3Message n POP3:PASS m 4 pe 8 sd 0.032268519029
+SH sm 4 sg 2621444
+ES id 8 tid 8 eid 8 etid 8 c MyProject::Pop3Message n POP3:PASS sm 4 sg 2621444 st 0.032268519029 am 7 ag 1048576 at 0.032268519029 pe 8
+CL id 36 tid 8 eid 36 etid 8 c omnetpp::cMessage n POP3:PASS m 4 pe -1 cid 8
+
+SE e 0 c 10 m "The user has finished the simulation -- at t=0s, event #8"

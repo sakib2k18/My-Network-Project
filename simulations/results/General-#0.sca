@@ -1,8 +1,8 @@
 version 3
-run General-0-20251030-03:00:00-26776
+run General-0-20251030-08:09:31-36192
 attr configname General
-attr datetime 20251030-03:00:00
-attr datetimef 20251030-030000
+attr datetime 20251030-08:09:31
+attr datetimef 20251030-080931
 attr experiment General
 attr inifile omnetpp.ini
 attr iterationvars ""
@@ -10,7 +10,7 @@ attr iterationvarsd ""
 attr iterationvarsf ""
 attr measurement ""
 attr network MyProject.simulations.EmailNetwork
-attr processid 26776
+attr processid 36192
 attr repetition 0
 attr replication #0
 attr resultdir results
